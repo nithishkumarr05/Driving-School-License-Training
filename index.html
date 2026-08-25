@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DriveEasy &middot; Driving School & License</title>
+  <!-- Custom Favicon (steering wheel) -->
+  <!-- Tailwind CSS via CDN -->
+  <script src="tailwind.js"></script>
+  <!-- Custom Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontWeight: {
+            bold: '600',
+            extrabold: '600',
+            semibold: '550',
+          },
+          colors: {
+            brand: {
+              primary: '#111111',
+              secondary: '#2E2E2E',
+              muted: '#4A4A4A',
+              border: '#F0E3DC',
+              accent: '#FF8E6C',
+              'accent-dark': '#F27A58',
+              'accent-light': '#FFE0D3',
+              bg: '#FFFFFF',
+              'bg-soft': '#FFF5F0',
+            },
+            custom: {
+              peach: '#FF8E6C',
+              'peach-light': '#FFE0D3',
+            }
+          },
+          fontFamily: {
+            display: ['"Poppins"', 'system-ui', 'sans-serif'],
+            body: ['"Inter"', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'float-slow': 'floatSlow 6s ease-in-out infinite',
+            'slide-up': 'slideUp 0.6s ease-out',
+            'bounce-gentle': 'bounceGentle 2.5s ease-in-out infinite',
+          },
+          keyframes: {
+            floatSlow: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+            slideUp: { '0%': { transform: 'translateY(40px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+            bounceGentle: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-6px)' } },
+          },
+          backgroundImage: {
+            'warm-pattern': 'radial-gradient(circle at 20% 30%, rgba(255,191,163,0.10) 0%, transparent 60%)',
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* Typography Consistency Overrides */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 600 !important;
+    }
+    p {
+      font-weight: 400;
+    }
+    p strong, p b, p .font-bold, p .font-semibold {
+      font-weight: 550 !important;
+    }
+    .font-extrabold {
+      font-weight: 800 !important;
+    }
+    /* Color Vibrancy Overrides */
+    .bg-\[\#FFBFA3\], .bg-brand-accent {
+      background-color: #FF8E6C;
+    }
+    .text-\[\#FFBFA3\], .text-brand-accent {
+      color: #FF8E6C;
+    }
+    .border-\[\#FFBFA3\], .border-brand-accent {
+      border-color: #FF8E6C;
+    }
+    .bg-\[\#FFE6DA\], .bg-brand-accent-light {
+      background-color: #FFE0D3;
+    }
+    .text-\[\#FFE6DA\], .text-brand-accent-light {
+      color: #FFE0D3;
+    }
+    .border-\[\#FFE6DA\], .border-brand-accent-light {
+      border-color: #FFE0D3;
+    }
+    .hover\:bg-\[\#E8A385\]:hover, .hover\:bg-brand-accent-dark:hover {
+      background-color: #F27A58;
+    }
+    .bg-\[\#FFF9F6\], .bg-brand-bg-soft {
+      background-color: #FFF5F0;
+    }
+    .text-\[\#FFF9F6\], .text-brand-bg-soft {
+      color: #FFF5F0;
+    }
+    .border-\[\#FFF9F6\], .border-brand-bg-soft {
+      border-color: #FFF5F0;
+    }
+    body {
+      background-color: #FFFFFF;
+      color: #111111;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .dark body {
+      background-color: #1A1A1A;
+      color: #F5F5F5;
+    }
+    .dark .text-brand-primary { color: #F5F5F5; }
+    .dark .text-brand-secondary { color: #E0E0E0; }
+    .dark .text-brand-muted { color: #AAAAAA; }
+    .dark .bg-brand-bg-soft { background-color: #2A2A2A; }
+    .dark .border-brand-border { border-color: #3A3A3A; }
+    /* scroll */
+    body::-webkit-scrollbar { width: 6px; }
+    body::-webkit-scrollbar-track { background: #FFF9F6; border-radius: 10px; }
+    body::-webkit-scrollbar-thumb { background: #FFBFA3; border-radius: 10px; }
+    /* cards */
+    .card-school {
+      background: #FFFFFF;
+      border-radius: 32px;
+      transition: all 0.3s ease;
+      border: 1px solid #F0E3DC;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    }
+    .dark .card-school {
+      background: #2A2A2A;
+      border-color: #3A3A3A;
+    }
+    .card-school:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px -10px rgba(255,191,163,0.25);
+      border-color: #FFBFA3;
+    }
+    .btn-primary-school {
+      background-color: #111111;
+      color: #FFFFFF;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .btn-primary-school:hover {
+      background-color: #2A2A2A;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255,191,163,0.4);
+      color: #FFFFFF;
+    }
+    .dark .btn-primary-school {
+      background-color: #FFFFFF;
+      color: #111111;
+    }
+    .dark .btn-primary-school:hover {
+      background-color: #FFE6DA;
+      color: #111111;
+      box-shadow: 0 8px 20px rgba(255,191,163,0.2);
+    }
+    .btn-outline-school {
+      border: 1.5px solid #111111;
+      color: #111111;
+      background: transparent;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    .btn-outline-school:hover {
+      background-color: #111111;
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+    .dark .btn-outline-school {
+      border-color: #F5F5F5;
+      color: #F5F5F5;
+    }
+    .dark .btn-outline-school:hover {
+      background-color: #F5F5F5;
+      color: #111111;
+    }
+    .nav-link {
+      position: relative;
+      font-weight: 500;
+      color: #111111;
+    }
+    .dark .nav-link {
+      color: #F5F5F5;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 2.5px;
+      background-color: #FFBFA3;
+      transition: width 0.25s ease;
+      border-radius: 3px;
+    }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active::after { width: 100%; }
+    .nav-link.active { color: #FFBFA3 !important; }
+    .dropdown-school {
+      position: relative;
+    }
+    .dropdown-school-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      background: #FFFFFF;
+      border-radius: 18px;
+      padding: 0.5rem 0;
+      box-shadow: 0 18px 32px rgba(0,0,0,0.06);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: all 0.25s ease;
+      z-index: 1000;
+      border: 1px solid #F0E3DC;
+    }
+    .dark .dropdown-school-menu { background: #2A2A2A; border-color: #3A3A3A; }
+    .dropdown-school:hover .dropdown-school-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      padding: 0.6rem 1.4rem;
+      transition: all 0.2s;
+      color: #111111;
+    }
+    .dark .dropdown-item { color: #F5F5F5; }
+    .dropdown-item:hover {
+      background-color: #FFF9F6;
+      color: #111111;
+      padding-left: 1.7rem;
+    }
+    .dropdown-item i { margin-right: 0.75rem; width: 20px; }
+    .mobile-menu-school {
+      background: #FFFFFF;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 0 0 24px 24px;
+    }
+    .dark .mobile-menu-school { background: #2A2A2A; }
+    .mobile-menu-school.open { max-height: 80vh; overflow-y: auto; scrollbar-width: none; }
+    .mobile-menu-school.open::-webkit-scrollbar { display: none; }
+    .stat-badge-school {
+      background: #FFFFFF;
+      border-radius: 28px;
+      padding: 1rem 0.5rem;
+      border: 1px solid #F0E3DC;
+      text-align: center;
+    }
+    .dark .stat-badge-school { background: #2A2A2A; }
+    .testimonial-card-school {
+      background: #FFFFFF;
+      border-radius: 28px;
+      padding: 1.8rem;
+      border-left: 5px solid #FFBFA3;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+    }
+    .dark .testimonial-card-school { background: #2A2A2A; }
+    .social-icon-school {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #FFF9F6;
+      color: #111111;
+      transition: all 0.3s;
+    }
+    .social-icon-school:hover {
+      background-color: #FFBFA3;
+      color: #111111;
+      transform: translateY(-3px);
+    }
+    .dark .social-icon-school { background-color: #2A2A2A; color: #F5F5F5; }
+    .dark .social-icon-school:hover { background-color: #FFBFA3; color: #111111; }
+    .avatar-circle-school {
+      background-color: #FFBFA3;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #111111;
+    }
+    .flavor-tag-school {
+      background: #FFE6DA;
+      border-radius: 100px;
+      padding: 0.2rem 0.9rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: #111111;
+    }
+    .dark .flavor-tag-school { background: #3A2A24; color: #F5F5F5; }
+    .accent-glow {
+      box-shadow: 0 0 0 0 rgba(255,191,163,0);
+      transition: box-shadow 0.3s ease;
+    }
+    .accent-glow:hover {
+      box-shadow: 0 0 20px 4px rgba(255,191,163,0.3);
+    }
+    .parent-portal-btn {
+      background: #111111;
+      color: #FFFFFF;
+      border-radius: 60px;
+      padding: 0.6rem 1.6rem;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: 1px solid #111111;
+    }
+    .parent-portal-btn:hover {
+      background: #2A2A2A;
+      border-color: #2A2A2A;
+      box-shadow: 0 6px 16px rgba(255,191,163,0.3);
+    }
+    [dir="rtl"] .ml-auto { margin-left: 0 !important; margin-right: auto !important; }
+    [dir="rtl"] .border-l-4 { border-left-width: 0 !important; border-right-width: 4px !important; }
+    [dir="rtl"] .ms-1 { margin-left: 0 !important; margin-right: 0.25rem !important; }
+    html[dir="rtl"] .dropdown-school-menu { left: auto; right: 0; }
+    [dir="rtl"] .dropdown-item i { margin-right: 0; margin-left: 0.75rem; }
+    [dir="rtl"] .dropdown-item:hover { padding-left: 1.4rem; padding-right: 1.7rem; }
+    [dir="rtl"] .testimonial-card-school { border-left: none; border-right: 5px solid #FFBFA3; }
+
+    /* hero background */
+    .index-hero-bg {
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"%3E%3Crect width="1200" height="800" fill="%231a1a2e"/%3E%3Cpath d="M0 400 Q 200 200 400 400 T 800 400 T 1200 400 L 1200 800 L 0 800 Z" fill="%23FF8E6C" opacity="0.15"/%3E%3Ccircle cx="200" cy="300" r="80" fill="%23FFBFA3" opacity="0.2"/%3E%3Ccircle cx="900" cy="200" r="120" fill="%23FFBFA3" opacity="0.15"/%3E%3C/svg%3E');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .index-hero-bg h1 {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+    .index-hero-bg p {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+    .dark .index-hero-bg h1 {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.75);
+    }
+    .dark .index-hero-bg p {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+    }
+  </style>
+  <link rel="icon" href="assets/fav.png" type="image/png">
+</head>
+<body class="warm-pattern">
+  <!-- ======== NAVIGATION ======== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#1A1A1A] border-b border-[#F0E3DC] dark:border-[#3A3A3A] shadow-sm">
+    <div class="container mx-auto px-6">
+      <div class="flex items-center justify-between h-24 md:h-24 py-3 md:py-0">
+        <!-- Left Side: Logo and Toggles -->
+        <div class="flex items-center gap-4">
+          <!-- Logo -->
+          <a class="flex items-center gap-2 md:gap-3 group shrink-0" href='index.html'>
+            <div class="w-9 h-9 md:w-10 md:h-10 bg-[#FFBFA3] rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition duration-300">
+              <i class="fas fa-car text-[#111111] text-base md:text-lg"></i>
+            </div>
+            <div>
+              <span class="text-lg md:text-2xl font-display font-extrabold tracking-tight text-[#111111] dark:text-white">DRIVE<span class="text-[#FFBFA3]">EASY</span></span>
+            </div>
+          </a>
+
+        </div>
+        <!-- Desktop nav + actions -->
+        <div class="flex items-center gap-3 xl:gap-8 ml-auto rtl:ml-0 rtl:mr-auto">
+          <div class="hidden xl:flex items-center gap-3 xl:gap-6">
+            <!-- Home Dropdown -->
+            <div class="dropdown-school">
+              <button class="nav-link active font-medium transition flex items-center gap-1 py-2 whitespace-nowrap text-sm xl:text-base">
+                Home <i class="fas fa-chevron-down text-xs ms-1"></i>
+              </button>
+              <div class="dropdown-school-menu">
+                <a class="dropdown-item font-medium" href="index.html"> Home 1</a>
+                <a class="dropdown-item" href="home2.html"> Home 2</a>
+              </div>
+            </div>
+            <a class="nav-link hover:text-[#FFBFA3] transition whitespace-nowrap text-sm xl:text-base" href="about.html">About</a>
+            <a class="nav-link hover:text-[#FFBFA3] transition whitespace-nowrap text-sm xl:text-base" href="services.html">Services</a>
+            <a class="nav-link hover:text-[#FFBFA3] transition whitespace-nowrap text-sm xl:text-base" href="courses.html">Courses</a>
+            <a class="nav-link hover:text-[#FFBFA3] transition whitespace-nowrap text-sm xl:text-base" href="vehicles.html">Vehicles</a>
+            <a class="nav-link hover:text-[#FFBFA3] transition whitespace-nowrap text-sm xl:text-base" href="fees.html">Fees</a>
+            <a class="nav-link hover:text-[#FFBFA3] transition whitespace-nowrap text-sm xl:text-base" href="contact.html">Contact</a>
+            
+            <!-- Dashboard Dropdown -->
+            <div class="dropdown-school">
+              <button class="nav-link font-medium transition flex items-center gap-1 py-2 whitespace-nowrap text-sm xl:text-base">
+                Dashboard <i class="fas fa-chevron-down text-xs ms-1"></i>
+              </button>
+              <div class="dropdown-school-menu">
+                <a class="dropdown-item font-medium" href="client.html">Client</a>
+                <a class="dropdown-item font-medium" href="admin.html">Admin</a>
+              </div>
+            </div>
+            <!-- Toggles near Dashboard -->
+            <div class="flex items-center gap-2 ml-2">
+              <button id="theme-toggle" class="w-10 h-10 rounded-full bg-[#FFE6DA] dark:bg-[#3A2A24] text-[#111111] dark:text-[#FFBFA3] hover:scale-110 transition flex items-center justify-center">
+                <i class="fas fa-moon dark:hidden"></i>
+                <i class="fas fa-sun hidden dark:inline"></i>
+              </button>
+              <button id="rtl-toggle" class="w-10 h-10 rounded-full bg-[#FFE6DA] dark:bg-[#3A2A24] text-[#111111] dark:text-[#FFBFA3] hover:scale-110 transition flex items-center justify-center font-bold text-base">
+                <i class="fas fa-exchange-alt"></i>
+              </button>
+            </div>
+          </div>
+          <!-- Desktop actions -->
+          <div class="hidden xl:flex items-center gap-3 ms-2">
+            <!-- Logged Out Buttons -->
+            <div id="auth-buttons" class="flex items-center gap-3">
+              <a href="login.html" class="px-5 py-2 border border-gray-200 dark:border-gray-700 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-neutral-800 transition">
+                Login
+              </a>
+              <a href="register.html" class="px-5 py-2 bg-[#111111] dark:bg-white dark:text-[#111111] text-white rounded-full text-sm font-semibold hover:bg-gray-800 dark:hover:bg-gray-100 transition shadow-sm">
+                Sign up
+              </a>
+            </div>
+            <!-- Logged In Dropdown -->
+            <div id="user-profile-menu" class="hidden relative">
+              <button id="user-menu-btn" class="w-10 h-10 rounded-full bg-[#FFBFA3] text-[#111111] font-bold flex items-center justify-center border-2 border-white dark:border-[#1A1A1A] shadow-md hover:scale-105 transition">
+                <span id="user-initials">U</span>
+              </button>
+              <div id="user-dropdown" class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-[#2E2E2E] border border-brand-border dark:border-[#3A3A3A] rounded-xl shadow-lg py-2 hidden z-50">
+                <div class="px-4 py-2 border-b border-gray-100 dark:border-neutral-700">
+                  <p class="text-xs text-gray-400 dark:text-gray-500">Logged in as</p>
+                  <p id="user-display-name" class="text-sm font-semibold truncate text-gray-800 dark:text-gray-100">User Name</p>
+                </div>
+                <a href="client.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#3A3A3A] transition">
+                  <i class="fas fa-th-large text-xs mr-2"></i> Dashboard
+                </a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#3A3A3A] transition">
+                  <i class="fas fa-cog text-xs mr-2"></i> Settings
+                </a>
+                <hr class="my-1 border-gray-100 dark:border-neutral-700">
+                <button id="logout-btn" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-50 dark:hover:bg-[#3A3A3A] transition">
+                  <i class="fas fa-sign-out-alt text-xs mr-2"></i> Log Out
+                </button>
+              </div>
+            </div>
+            <!-- Toggles Moved to Left -->
+          </div>
+          <!-- Mobile toggle -->
+          <button id="mobile-toggle" class="xl:hidden w-10 h-10 rounded-full bg-[#FFBFA3] text-[#111111] flex items-center justify-center shadow-md">
+            <i class="fas fa-bars text-base"></i>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="mobile-menu-school xl:hidden">
+        <div class="py-4 px-3 space-y-1">
+          <div class="py-1">
+            <button onclick="document.getElementById('home-mobile-drop').classList.toggle('hidden'); document.getElementById('home-mobile-icon').classList.toggle('rotate-180')" class="w-full flex items-center justify-between py-3 px-4 font-medium text-[#111111] border-l-4 border-[#FFBFA3] bg-[#FFE6DA] rounded-xl transition cursor-pointer dark:text-white dark:bg-[#3A2A24]">
+              <span>Home</span>
+              <i id="home-mobile-icon" class="fas fa-chevron-down text-xs opacity-60 transition-transform duration-300"></i>
+            </button>
+            <div id="home-mobile-drop" class="hidden pl-2 space-y-1 mt-1 mb-2">
+              <a class="block py-2.5 px-4 font-medium text-[#111111] bg-[#FFE6DA] border-l-4 border-[#FFBFA3] rounded-xl transition dark:text-white dark:bg-[#3A2A24]" href="index.html"><i class="fas fa-home w-6 text-[#FFBFA3]"></i> Home 1</a>
+              <a class="block py-2.5 px-4 font-medium text-[#111111] hover:bg-[#FFF9F6] rounded-xl transition dark:text-white dark:hover:bg-[#2A2A2A]" href="home2.html"><i class="fas fa-home w-6 text-[#FFBFA3]"></i> Home 2</a>
+            </div>
+          </div>
+          <a class="block py-3 px-4 font-medium text-[#111111] hover:bg-[#FFF9F6] rounded-xl transition dark:text-white dark:hover:bg-[#2A2A2A]" href="about.html">About</a>
+          <a class="block py-3 px-4 font-medium text-[#111111] hover:bg-[#FFF9F6] rounded-xl transition dark:text-white dark:hover:bg-[#2A2A2A]" href="services.html">Services</a>
+          <a class="block py-3 px-4 font-medium text-[#111111] hover:bg-[#FFF9F6] rounded-xl transition dark:text-white dark:hover:bg-[#2A2A2A]" href="courses.html">Courses</a>
+          <a class="block py-3 px-4 font-medium text-[#111111] hover:bg-[#FFF9F6] rounded-xl transition dark:text-white dark:hover:bg-[#2A2A2A]" href="vehicles.html">Vehicles</a>
+          <a class="block py-3 px-4 font-medium text-[#111111] hover:bg-[#FFF9F6] rounded-xl transition dark:text-white dark:hover:bg-[#2A2A2A]" href="fees.html">Fees</a>
+          <a class="block py-3 px-4 font-medium text-[#111111] hover:bg-[#FFF9F6] rounded-xl transition dark:text-white dark:hover:bg-[#2A2A2A]" href="contact.html">Contact</a>
+          
+          <!-- Mobile Dashboard Dropdown -->
+          <div class="py-1">
+            <button onclick="document.getElementById('dashboard-mobile-drop').classList.toggle('hidden'); document.getElementById('dashboard-mobile-icon').classList.toggle('rotate-180')" class="w-full flex items-center justify-between py-3 px-4 font-medium text-[#111111] hover:bg-[#FFF9F6] rounded-xl transition cursor-pointer dark:text-white dark:hover:bg-[#2A2A2A]">
+              <span>Dashboard</span>
+              <i id="dashboard-mobile-icon" class="fas fa-chevron-down text-xs opacity-60 transition-transform duration-300"></i>
+            </button>
+            <div id="dashboard-mobile-drop" class="hidden pl-2 space-y-1 mt-1 mb-2">
+              <a class="block py-2.5 px-4 font-medium text-[#111111] hover:bg-[#FFF9F6] rounded-xl transition dark:text-white dark:hover:bg-[#2A2A2A]" href="client.html">Client</a>
+              <a class="block py-2.5 px-4 font-medium text-[#111111] hover:bg-[#FFF9F6] rounded-xl transition dark:text-white dark:hover:bg-[#2A2A2A]" href="admin.html">Admin</a>
+            </div>
+          </div>
+          <div class="flex flex-col gap-3 pt-5 mt-3 border-t border-[#F0E3DC] dark:border-[#3A3A3A]">
+            <!-- Logged Out Mobile Buttons -->
+            <div id="mobile-auth-buttons" class="flex flex-col gap-2">
+              <a class="text-center py-2.5 rounded-full font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 dark:text-white dark:border-gray-700 dark:hover:bg-[#2E2E2E]" href="login.html">Login</a>
+              <a class="text-center py-2.5 rounded-full font-semibold bg-[#111111] text-white hover:bg-gray-800 dark:bg-white dark:text-[#111111] dark:hover:bg-gray-100" href="register.html">Sign up</a>
+            </div>
+            <!-- Logged In Mobile Info & Actions -->
+            <div id="mobile-user-info" class="hidden flex flex-col gap-3">
+              <div class="flex items-center gap-3 px-4 py-2 bg-[#FFF9F6] dark:bg-[#2E2E2E]/40 rounded-2xl">
+                <div class="w-10 h-10 rounded-full bg-[#FFBFA3] text-[#111111] font-bold flex items-center justify-center shrink-0 shadow-sm">
+                  <span id="mobile-user-initials">U</span>
+                </div>
+                <div class="min-w-0">
+                  <div id="mobile-user-name" class="font-bold text-[#111111] dark:text-white text-sm truncate">Parent Name</div>
+                  <div class="text-xs text-gray-400 dark:text-gray-500">Logged in</div>
+                </div>
+              </div>
+              <a class="text-center py-2.5 rounded-full font-semibold bg-[#111111] text-white hover:bg-gray-800 dark:bg-white dark:text-[#111111] dark:hover:bg-gray-100 flex items-center justify-center gap-2" href="client.html">
+                <i class="fas fa-th-large"></i> Go to Dashboard
+              </a>
+              <button id="mobile-logout-btn" class="text-center py-2.5 rounded-full font-semibold text-red-500 border border-red-200 dark:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-950/20 flex items-center justify-center gap-2">
+                <i class="fas fa-sign-out-alt"></i> Log Out
+              </button>
+            </div>
+            <div class="flex gap-3">
+              <button id="mobile-theme-toggle" class="flex-1 py-2 rounded-full bg-[#FFE6DA] dark:bg-[#3A2A24] text-[#111111] dark:text-[#FFBFA3] text-sm font-medium flex items-center gap-2 justify-center">
+                <i class="fas fa-moon dark:hidden"></i><i class="fas fa-sun hidden dark:inline"></i> Theme
+              </button>
+              <button id="mobile-rtl-toggle" class="flex-1 py-2 rounded-full bg-[#FFE6DA] dark:bg-[#3A2A24] text-[#111111] dark:text-[#FFBFA3] text-sm font-medium flex items-center gap-2 justify-center">
+                <i class="fas fa-exchange-alt"></i> RTL
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- ======== HERO ======== -->
+  <section class="min-h-screen flex items-center pt-32 pb-12 md:pt-40 md:pb-16 relative overflow-hidden bg-white dark:bg-[#1A1A1A] index-hero-bg">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
+    </div>
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-4xl mx-auto text-center animate-slide-up">
+        <span class="inline-block bg-[#FFBFA3] text-[#111111] px-5 py-1.5 rounded-full text-sm font-semibold tracking-wide mb-4"><i class="fas fa-car text-sm text-[#111111]"></i> since 2012</span>
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight text-white">
+          Drive with <span class="text-[#FFBFA3]">Confidence</span><br />
+          <span class="text-4xl md:text-5xl">get your license today</span>
+        </h1>
+        <p class="text-lg md:text-xl text-white/95 mb-8 max-w-2xl mx-auto">
+          Professional driving school with certified instructors, modern vehicles, and flexible courses. <br class="hidden sm:block" />
+          From first lesson to license — we guide you every mile.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="courses.html" class="btn-primary-school px-8 py-3 rounded-full inline-flex items-center gap-2 text-base shadow-lg animate-bounce-gentle">
+            <i class="fas fa-road"></i> View Courses
+          </a>
+          <a href="login.html" id="hero-portal-btn" class="px-8 py-3 rounded-full inline-flex items-center gap-2 text-base border-2 border-white text-white hover:bg-white hover:text-[#111111] transition duration-300 font-semibold bg-transparent">
+            <i class="fas fa-user-lock"></i> Student Portal
+          </a>
+        </div>
+        <div class="mt-10 pt-8 border-t border-white/20 max-w-xl mx-auto">
+          <p class="text-xs uppercase tracking-wider font-semibold text-white/80 mb-4"><i class="fas fa-star text-xs text-[#FFBFA3]"></i> quick links <i class="fas fa-star text-xs text-[#FFBFA3]"></i></p>
+          <div class="flex flex-wrap justify-center gap-6 text-sm font-semibold">
+            <a href="vehicles.html" class="text-white hover:text-[#FFBFA3] transition flex items-center gap-2 group">
+              <span class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-[#FFBFA3] group-hover:text-[#111111] transition"><i class="fas fa-car text-xs"></i></span> Vehicles
+            </a>
+            <a href="fees.html" class="text-white hover:text-[#FFBFA3] transition flex items-center gap-2 group">
+              <span class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-[#FFBFA3] group-hover:text-[#111111] transition"><i class="fas fa-dollar-sign text-xs"></i></span> Fees
+            </a>
+            <a href="contact.html" class="text-white hover:text-[#FFBFA3] transition flex items-center gap-2 group">
+              <span class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-[#FFBFA3] group-hover:text-[#111111] transition"><i class="fas fa-map-pin text-xs"></i></span> Location
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ======== WHY CHOOSE US ======== -->
+  <section class="py-20 bg-[#FFF9F6] dark:bg-[#252525] relative overflow-hidden">
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="text-center mb-14">
+        <span class="text-[#111111] dark:text-white font-semibold tracking-wider text-sm uppercase bg-white/60 dark:bg-[#2A2A2A] px-5 py-1.5 rounded-full inline-block shadow-sm"><i class="fas fa-star text-xs text-[#FFBFA3]"></i> why drive smart</span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold mt-5 text-[#111111] dark:text-white">More Than <span class="text-[#FFBFA3]">A Driving School</span></h2>
+        <p class="text-[#2E2E2E] dark:text-[#E0E0E0] max-w-2xl mx-auto mt-3">We build safe, skilled, and confident drivers through personalized instruction and state-of-the-art vehicles.</p>
+      </div>
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="card-school p-8 text-center group transition-all duration-300 hover:shadow-xl hover:border-[#FFBFA3]">
+          <div class="w-24 h-24 mx-auto rounded-3xl overflow-hidden shadow-md group-hover:scale-110 transition duration-500 mb-6 border-2 border-[#FFE0D3] dark:border-[#3A2A24] flex items-center justify-center bg-[#FFE6DA] dark:bg-[#3A2A24]">
+            <i class="fas fa-user-graduate text-4xl text-[#FFBFA3]"></i>
+          </div>
+          <h3 class="text-xl font-bold text-[#111111] dark:text-white mb-3">Certified Instructors</h3>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] text-sm leading-relaxed">Patient, experienced, and DMV-certified instructors who tailor lessons to your learning pace.</p>
+        </div>
+        <div class="card-school p-8 text-center group transition-all duration-300 hover:shadow-xl hover:border-[#FFBFA3]">
+          <div class="w-24 h-24 mx-auto rounded-3xl overflow-hidden shadow-md group-hover:scale-110 transition duration-500 mb-6 border-2 border-[#FFE0D3] dark:border-[#3A2A24] flex items-center justify-center bg-[#FFE6DA] dark:bg-[#3A2A24]">
+            <i class="fas fa-car-side text-4xl text-[#FFBFA3]"></i>
+          </div>
+          <h3 class="text-xl font-bold text-[#111111] dark:text-white mb-3">Modern Fleet</h3>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] text-sm leading-relaxed">Learn in late-model vehicles equipped with dual controls, backup cameras, and safety features.</p>
+        </div>
+        <div class="card-school p-8 text-center group transition-all duration-300 hover:shadow-xl hover:border-[#FFBFA3]">
+          <div class="w-24 h-24 mx-auto rounded-3xl overflow-hidden shadow-md group-hover:scale-110 transition duration-500 mb-6 border-2 border-[#FFE0D3] dark:border-[#3A2A24] flex items-center justify-center bg-[#FFE6DA] dark:bg-[#3A2A24]">
+            <i class="fas fa-calendar-check text-4xl text-[#FFBFA3]"></i>
+          </div>
+          <h3 class="text-xl font-bold text-[#111111] dark:text-white mb-3">Flexible Scheduling</h3>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] text-sm leading-relaxed">Morning, evening, and weekend slots available. We work around your busy schedule.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ======== COURSES HIGHLIGHT ======== -->
+  <section class="py-20 bg-white dark:bg-[#1A1A1A]">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
+        <div class="lg:w-1/2 space-y-6">
+          <span class="inline-block bg-[#FFE6DA] dark:bg-[#2A2A2A] text-[#111111] dark:text-white px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide"><i class="fas fa-road text-xs"></i> our courses</span>
+          <h2 class="text-4xl md:text-5xl font-display font-bold text-[#111111] dark:text-white leading-tight">From <span class="text-[#FFBFA3]">Zero</span> to License</h2>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] text-lg">Comprehensive programs for beginners, defensive driving, and license test preparation — all behind the wheel.</p>
+          <div class="space-y-5 pt-4">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#FFE6DA] dark:bg-[#3A2A24] flex items-center justify-center text-[#FFBFA3] text-lg shrink-0 mt-1"><i class="fas fa-car text-[#FFBFA3] text-xs"></i></div>
+              <div><h4 class="font-bold text-[#111111] dark:text-white">Beginner's Course</h4><p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">50+ hours of theory + 20 hours practical. Perfect for first-timers.</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#FFE6DA] dark:bg-[#3A2A24] flex items-center justify-center text-[#FFBFA3] text-lg shrink-0 mt-1"><i class="fas fa-shield-alt text-[#FFBFA3] text-xs"></i></div>
+              <div><h4 class="font-bold text-[#111111] dark:text-white">Defensive Driving</h4><p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">Advanced techniques to anticipate and avoid hazards on the road.</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#FFE6DA] dark:bg-[#3A2A24] flex items-center justify-center text-[#FFBFA3] text-lg shrink-0 mt-1"><i class="fas fa-check-circle text-[#FFBFA3] text-xs"></i></div>
+              <div><h4 class="font-bold text-[#111111] dark:text-white">License Test Prep</h4><p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">Mock tests, parking practice, and DMV route familiarization.</p></div>
+            </div>
+          </div>
+          <a href="courses.html" class="inline-flex items-center gap-2 text-[#111111] dark:text-white font-semibold hover:text-[#FFBFA3] transition group mt-2">
+            Explore all courses <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
+          </a>
+        </div>
+        <div class="lg:w-1/2 relative">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-[#FFF9F6] dark:bg-[#2A2A2A] rounded-3xl p-6 text-center border border-[#F0E3DC] dark:border-[#3A3A3A]">
+              <div class="text-4xl font-bold text-[#FFBFA3]">97%</div>
+              <div class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA] mt-1">pass rate</div>
+            </div>
+            <div class="bg-[#FFF9F6] dark:bg-[#2A2A2A] rounded-3xl p-6 text-center border border-[#F0E3DC] dark:border-[#3A3A3A]">
+              <div class="text-4xl font-bold text-[#FFBFA3]">5k+</div>
+              <div class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA] mt-1">students trained</div>
+            </div>
+            <div class="bg-[#FFF9F6] dark:bg-[#2A2A2A] rounded-3xl p-6 text-center border border-[#F0E3DC] dark:border-[#3A3A3A] col-span-2">
+              <div class="text-4xl font-bold text-[#FFBFA3]">98%</div>
+              <div class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA] mt-1">student satisfaction</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ======== VEHICLES & FACILITIES ======== -->
+  <section class="py-20 bg-white dark:bg-[#1A1A1A]">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <div class="text-center mb-14">
+        <span class="inline-block bg-[#FFE6DA] dark:bg-[#2A2A2A] text-[#111111] dark:text-white px-5 py-1.5 rounded-full text-sm font-semibold tracking-wide">
+          <i class="fas fa-car text-[#FFBFA3]"></i> our fleet
+        </span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold mt-5 text-[#111111] dark:text-white">Modern <span class="text-[#FFBFA3]">Vehicles</span></h2>
+        <p class="text-[#2E2E2E] dark:text-[#E0E0E0] max-w-2xl mx-auto mt-3">Learn in comfortable, safe, and well-maintained cars equipped with the latest safety technology.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-[#FFF5F0] dark:bg-[#252525] rounded-3xl p-6 border border-[#F0E3DC] dark:border-[#3A3A3A] hover:border-[#FFBFA3] transition duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-[#FFE0D3] dark:bg-[#3A2A24] flex items-center justify-center text-[#FFBFA3] text-xl mb-5">
+            <i class="fas fa-car"></i>
+          </div>
+          <h3 class="text-lg font-bold text-[#111111] dark:text-white mb-2">Sedan</h3>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] text-xs leading-relaxed">Toyota Camry, Honda Accord — smooth handling, perfect for beginners.</p>
+        </div>
+        <div class="bg-[#FFF5F0] dark:bg-[#252525] rounded-3xl p-6 border border-[#F0E3DC] dark:border-[#3A3A3A] hover:border-[#FFBFA3] transition duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-[#FFE0D3] dark:bg-[#3A2A24] flex items-center justify-center text-[#FFBFA3] text-xl mb-5">
+            <i class="fas fa-truck"></i>
+          </div>
+          <h3 class="text-lg font-bold text-[#111111] dark:text-white mb-2">SUV</h3>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] text-xs leading-relaxed">Ford Escape, Hyundai Tucson — higher visibility and extra space.</p>
+        </div>
+        <div class="bg-[#FFF5F0] dark:bg-[#252525] rounded-3xl p-6 border border-[#F0E3DC] dark:border-[#3A3A3A] hover:border-[#FFBFA3] transition duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-[#FFE0D3] dark:bg-[#3A2A24] flex items-center justify-center text-[#FFBFA3] text-xl mb-5">
+            <i class="fas fa-charging-station"></i>
+          </div>
+          <h3 class="text-lg font-bold text-[#111111] dark:text-white mb-2">Electric</h3>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] text-xs leading-relaxed">Tesla Model 3, Nissan Leaf — eco-friendly and instant torque.</p>
+        </div>
+        <div class="bg-[#FFF5F0] dark:bg-[#252525] rounded-3xl p-6 border border-[#F0E3DC] dark:border-[#3A3A3A] hover:border-[#FFBFA3] transition duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-[#FFE0D3] dark:bg-[#3A2A24] flex items-center justify-center text-[#FFBFA3] text-xl mb-5">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="text-lg font-bold text-[#111111] dark:text-white mb-2">Safety First</h3>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] text-xs leading-relaxed">Dual controls, airbags, backup cameras, and anti-lock brakes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ======== TESTIMONIALS ======== -->
+  <section class="py-20 bg-[#FFF9F6] dark:bg-[#252525] relative overflow-hidden">
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="text-center mb-12">
+        <i class="fas fa-quote-left text-[#FFBFA3] text-4xl opacity-30 mb-2"></i>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-[#111111] dark:text-white">What <span class="text-[#FFBFA3]">Students Say</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="bg-white dark:bg-[#2A2A2A] rounded-3xl p-8 shadow-lg border border-[#F0E3DC] dark:border-[#3A3A3A] hover:shadow-xl transition group flex flex-col h-full">
+          <div class="flex gap-1 mb-4"><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i></div>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] mb-6 leading-relaxed">"I passed my test on the first try! The instructors are patient and really know their stuff."</p>
+          <div class="flex items-center gap-3 mt-auto">
+            <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-[#FFE0D3] dark:border-[#3A2A24] shrink-0 shadow-sm flex items-center justify-center bg-[#FFBFA3] text-white font-bold">JD</div>
+            <div><strong class="text-[#111111] dark:text-white">James D.</strong><div class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA]">license in 3 weeks</div></div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-[#2A2A2A] rounded-3xl p-8 shadow-lg border border-[#F0E3DC] dark:border-[#3A3A3A] hover:shadow-xl transition group flex flex-col h-full">
+          <div class="flex gap-1 mb-4"><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i></div>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] mb-6 leading-relaxed">"Flexible scheduling and modern cars made all the difference. Highly recommend!"</p>
+          <div class="flex items-center gap-3 mt-auto">
+            <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-[#FFE0D3] dark:border-[#3A2A24] shrink-0 shadow-sm flex items-center justify-center bg-[#FFBFA3] text-white font-bold">MR</div>
+            <div><strong class="text-[#111111] dark:text-white">Maria R.</strong><div class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA]">parent of teen driver</div></div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-[#2A2A2A] rounded-3xl p-8 shadow-lg border border-[#F0E3DC] dark:border-[#3A3A3A] hover:shadow-xl transition group flex flex-col h-full">
+          <div class="flex gap-1 mb-4"><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i><i class="fas fa-star text-[#FFBFA3]"></i></div>
+          <p class="text-[#2E2E2E] dark:text-[#E0E0E0] mb-6 leading-relaxed">"The defensive driving course gave me confidence I never had. Worth every penny."</p>
+          <div class="flex items-center gap-3 mt-auto">
+            <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-[#FFE0D3] dark:border-[#3A2A24] shrink-0 shadow-sm flex items-center justify-center bg-[#FFBFA3] text-white font-bold">AS</div>
+            <div><strong class="text-[#111111] dark:text-white">Aisha S.</strong><div class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA]">defensive driving grad</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ======== CTA ======== -->
+  <section class="py-24 bg-[#111111] dark:bg-[#111111] relative overflow-hidden">
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="w-20 h-20 mx-auto bg-[#FFBFA3] rounded-2xl flex items-center justify-center text-3xl text-[#111111] shadow-xl mb-6">
+          <i class="fas fa-car"></i>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-4">Ready to <span class="text-[#FFBFA3]">Drive</span>?</h2>
+        <p class="text-[#E0E0E0] text-lg mb-10 max-w-2xl mx-auto">Book your first lesson or contact us for a free consultation. Let's get you on the road safely.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="courses.html" class="bg-[#FFBFA3] text-[#111111] px-10 py-4 rounded-full font-bold hover:bg-[#E8A385] transition shadow-lg hover:shadow-xl flex items-center gap-2">
+            <i class="fas fa-calendar-check"></i> Book a Lesson
+          </a>
+          <a href="contact.html" class="border-2 border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-[#111111] transition flex items-center gap-2">
+            <i class="fas fa-envelope"></i> Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ======== FOOTER ======== -->
+  <footer class="bg-white dark:bg-[#111111] text-[#111111] dark:text-white pt-16 pb-8 border-t-4 border-[#FFBFA3] transition-colors duration-300">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div class="text-center md:text-start">
+          <div class="flex items-center justify-center md:justify-start gap-3 mb-6">
+            <div class="w-9 h-9 md:w-10 md:h-10 bg-[#FFBFA3] rounded-xl flex items-center justify-center shadow-lg"><i class="fas fa-car text-[#111111] text-base md:text-lg"></i></div>
+            <span class="text-lg md:text-2xl font-display font-extrabold tracking-tight text-[#111111] dark:text-white">DRIVE<span class="text-[#FFBFA3]">EASY</span></span>
+          </div>
+          <p class="mb-5 text-[#2E2E2E] dark:text-[#E0E0E0] text-sm">Safe, confident, and skilled drivers — that's our promise.</p>
+          <div class="flex justify-center md:justify-start gap-3">
+            <a href="#" class="social-icon-school"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon-school"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon-school"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-icon-school"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="text-center md:text-start">
+          <h4 class="text-[#111111] dark:text-[#FFBFA3] font-bold text-lg mb-5 uppercase tracking-wider">Explore</h4>
+          <ul class="space-y-2">
+            <li><a href="courses.html" class="hover:text-[#FFBFA3] transition block text-[#2E2E2E] dark:text-[#E0E0E0]">Courses</a></li>
+            <li><a href="vehicles.html" class="hover:text-[#FFBFA3] transition block text-[#2E2E2E] dark:text-[#E0E0E0]">Vehicles</a></li>
+            <li><a href="fees.html" class="hover:text-[#FFBFA3] transition block text-[#2E2E2E] dark:text-[#E0E0E0]">Fees</a></li>
+            <li><a href="portal.html" id="footer-portal-link" class="hover:text-[#FFBFA3] transition block text-[#2E2E2E] dark:text-[#E0E0E0]">Student Portal</a></li>
+          </ul>
+        </div>
+        <div class="text-center md:text-start">
+          <h4 class="text-[#111111] dark:text-[#FFBFA3] font-bold text-lg mb-5 uppercase tracking-wider">Community</h4>
+          <ul class="space-y-2">
+            <li><a href="about.html" class="hover:text-[#FFBFA3] transition block text-[#2E2E2E] dark:text-[#E0E0E0]">About</a></li>
+            <li><a href="contact.html" class="hover:text-[#FFBFA3] transition block text-[#2E2E2E] dark:text-[#E0E0E0]">Contact</a></li>
+            <li><a href="#" class="hover:text-[#FFBFA3] transition block text-[#2E2E2E] dark:text-[#E0E0E0]">Careers</a></li>
+          </ul>
+        </div>
+        <div class="text-center md:text-start">
+          <h4 class="text-[#111111] dark:text-[#FFBFA3] font-bold text-lg mb-5 uppercase tracking-wider">School</h4>
+          <ul class="space-y-3">
+            <li class="flex justify-center md:justify-start gap-3 text-[#2E2E2E] dark:text-[#E0E0E0]"><i class="fas fa-map-marker-alt text-[#FFBFA3] mt-1"></i><span>456 Drive Ave, City Center</span></li>
+            <li class="flex justify-center md:justify-start gap-3 text-[#2E2E2E] dark:text-[#E0E0E0]"><i class="fas fa-phone text-[#FFBFA3]"></i><span>(555) 987-6543</span></li>
+            <li class="flex justify-center md:justify-start gap-3 text-[#2E2E2E] dark:text-[#E0E0E0]"><i class="fas fa-envelope text-[#FFBFA3]"></i><span>hello@drivesmart.com</span></li>
+            <li class="flex justify-center md:justify-start gap-3 text-[#2E2E2E] dark:text-[#E0E0E0] text-sm"><i class="fas fa-clock text-[#FFBFA3]"></i><span>Mon&ndash;Sat 8am &ndash; 8pm</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-[#F0E3DC] dark:border-[#3A3A3A] text-center text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">
+        <p>&copy; 2026 DRIVE SMART &middot; Driving School & License. <i class="fas fa-heart text-[#FFBFA3] mx-1"></i> Safety first.</p>
+      </div>
+    </div>
+  </footer>
+  <!-- ======== SCRIPTS ======== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Theme toggle
+      const themeBtns = document.querySelectorAll('#theme-toggle, #mobile-theme-toggle');
+      themeBtns.forEach(btn => {
+        btn?.addEventListener('click', () => {
+          document.documentElement.classList.toggle('dark');
+          localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+      });
+      if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+      // RTL
+      function setRTL(isRTL) {
+        const html = document.documentElement;
+        if (isRTL === 'rtl' || isRTL === true) { html.setAttribute('dir', 'rtl'); localStorage.setItem('dir', 'rtl'); } 
+        else { html.setAttribute('dir', 'ltr'); localStorage.setItem('dir', 'ltr'); }
+      }
+      const savedDir = localStorage.getItem('dir');
+      if (savedDir === 'rtl') document.documentElement.setAttribute('dir', 'rtl');
+      else document.documentElement.setAttribute('dir', 'ltr');
+      const rtlBtn = document.getElementById('rtl-toggle');
+      if (rtlBtn) {
+        rtlBtn.addEventListener('click', () => {
+          const currentDir = document.documentElement.getAttribute('dir');
+          setRTL(currentDir === 'rtl' ? 'ltr' : 'rtl');
+        });
+      }
+      const mobileRtlBtn = document.getElementById('mobile-rtl-toggle');
+      if (mobileRtlBtn) {
+        mobileRtlBtn.addEventListener('click', () => {
+          const currentDir = document.documentElement.getAttribute('dir');
+          setRTL(currentDir === 'rtl' ? 'ltr' : 'rtl');
+          const mobileMenu = document.getElementById('mobile-menu');
+          const mobileToggle = document.getElementById('mobile-toggle');
+          if (mobileMenu && mobileMenu.classList.contains('open')) {
+            mobileMenu.classList.remove('open');
+            if (mobileToggle && mobileToggle.querySelector('i')) {
+              mobileToggle.querySelector('i').classList.remove('fa-times');
+              mobileToggle.querySelector('i').classList.add('fa-bars');
+            }
+          }
+        });
+      }
+      // Mobile menu
+      const mobileToggle = document.getElementById('mobile-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener('click', () => {
+          mobileMenu.classList.toggle('open');
+          const icon = mobileToggle.querySelector('i');
+          if (mobileMenu.classList.contains('open')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+          } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+        mobileMenu.querySelectorAll('a:not(#mobile-rtl-toggle)').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            if (mobileToggle.querySelector('i')) {
+              mobileToggle.querySelector('i').classList.remove('fa-times');
+              mobileToggle.querySelector('i').classList.add('fa-bars');
+            }
+          });
+        });
+      }
+      // Session & Profile dropdown management
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      
+      const authButtons = document.getElementById('auth-buttons');
+      const userProfileMenu = document.getElementById('user-profile-menu');
+      const userInitials = document.getElementById('user-initials');
+      const userDisplayName = document.getElementById('user-display-name');
+      
+      const mobileAuthButtons = document.getElementById('mobile-auth-buttons');
+      const mobileUserInfo = document.getElementById('mobile-user-info');
+      const mobileUserInitials = document.getElementById('mobile-user-initials');
+      const mobileUserName = document.getElementById('mobile-user-name');
+      
+      const heroPortalBtn = document.getElementById('hero-portal-btn');
+      const footerPortalLink = document.getElementById('footer-portal-link');
+      if (currentUser) {
+        if (authButtons) authButtons.classList.add('hidden');
+        if (userProfileMenu) userProfileMenu.classList.remove('hidden');
+        const name = currentUser.name || 'User';
+        const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        if (userInitials) userInitials.innerText = initials;
+        if (userDisplayName) userDisplayName.innerText = name;
+        if (mobileAuthButtons) mobileAuthButtons.classList.add('hidden');
+        if (mobileUserInfo) mobileUserInfo.classList.remove('hidden');
+        if (mobileUserInitials) mobileUserInitials.innerText = initials;
+        if (mobileUserName) mobileUserName.innerText = name;
+        if (heroPortalBtn) {
+          heroPortalBtn.href = 'client.html';
+          heroPortalBtn.innerHTML = '<i class="fas fa-th-large"></i> Go to Dashboard';
+        }
+        if (footerPortalLink) {
+          footerPortalLink.href = 'client.html';
+          footerPortalLink.innerText = 'Student Dashboard';
+        }
+      } else {
+        if (authButtons) authButtons.classList.remove('hidden');
+        if (userProfileMenu) userProfileMenu.classList.add('hidden');
+        if (mobileAuthButtons) mobileAuthButtons.classList.remove('hidden');
+        if (mobileUserInfo) mobileUserInfo.classList.add('hidden');
+      }
+      // Dropdown menu toggle
+      const userMenuBtn = document.getElementById('user-menu-btn');
+      const userDropdown = document.getElementById('user-dropdown');
+      if (userMenuBtn && userDropdown) {
+        userMenuBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          userDropdown.classList.toggle('hidden');
+        });
+        document.addEventListener('click', () => {
+          userDropdown.classList.add('hidden');
+        });
+      }
+      // Log out handler
+      const handleLogout = () => {
+        localStorage.removeItem('currentUser');
+        window.location.reload();
+      };
+      const logoutBtn = document.getElementById('logout-btn');
+      const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+      if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+      if (mobileLogoutBtn) mobileLogoutBtn.addEventListener('click', handleLogout);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, viewport-fit=cover">
+    <title>DriveEasy · Sign Up</title>
+    <!-- Custom Favicon (steering wheel) -->
+    <meta name="description" content="Create your DriveEasy account. Book driving lessons, track progress, and get your license.">
+
+    <!-- Tailwind CSS -->
+    <script src="tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#111111',
+                            secondary: '#2E2E2E',
+                            muted: '#4A4A4A',
+                            border: '#F0E3DC',
+                            accent: '#FF8E6C',
+                            'accent-dark': '#F27A58',
+                            'accent-light': '#FFE0D3',
+                            bg: '#FFFFFF',
+                            'bg-soft': '#FFF5F0',
+                        }
+                    },
+                    fontFamily: {
+                        display: ['"Poppins"', 'system-ui', 'sans-serif'],
+                        body: ['"Inter"', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-6px)' } },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #FFFFFF;
+            color: #111111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,142,108,0.05) 0%, transparent 60%);
+        }
+        .dark body {
+            background-color: #1A1A1A;
+            color: #F5F5F5;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,142,108,0.04) 0%, transparent 60%);
+        }
+
+        /* toggles */
+        .theme-toggle-wrapper {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+        }
+        [dir="rtl"] .theme-toggle-wrapper {
+            right: auto;
+            left: 16px;
+        }
+        .toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 40px;
+            background: rgba(255,255,255,0.9);
+            color: #111;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,142,108,0.2);
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .dark .toggle-btn {
+            background: rgba(30,30,30,0.8);
+            color: #FFBFA3;
+            border-color: rgba(255,142,108,0.15);
+        }
+        .toggle-btn:hover {
+            background: #FF8E6C;
+            color: #111;
+            transform: rotate(10deg);
+        }
+        .dark .toggle-btn:hover {
+            background: #FF8E6C;
+            color: #111;
+        }
+
+        /* Card */
+        .signup-card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 36px;
+            padding: 2.2rem 2rem 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,142,108,0.15);
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .dark .signup-card {
+            background: rgba(26,26,26,0.92);
+            border-color: rgba(255,142,108,0.2);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+        }
+
+        /* Inputs */
+        .signup-input {
+            width: 100%;
+            padding: 0.85rem 1.2rem 0.85rem 3rem;
+            border-radius: 50px;
+            border: 1.5px solid #E5E5E5;
+            background: white;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            color: #111;
+            font-family: 'Inter', sans-serif;
+        }
+        .dark .signup-input {
+            background: rgba(30,30,30,0.8);
+            border-color: #3A3A3A;
+            color: #F5F5F5;
+        }
+        .signup-input:focus {
+            outline: none;
+            border-color: #FF8E6C;
+            box-shadow: 0 0 0 3px rgba(255,142,108,0.2);
+        }
+        .dark .signup-input:focus {
+            border-color: #FF8E6C;
+            box-shadow: 0 0 0 3px rgba(255,142,108,0.2);
+        }
+
+        /* password wrapper */
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .password-wrapper .signup-input {
+            padding-right: 3rem;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #FF8E6C;
+            font-size: 1rem;
+            background: transparent;
+            border: none;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dark .toggle-password { color: #FF8E6C; }
+        .toggle-password:hover { color: #111; }
+        .dark .toggle-password:hover { color: #FFBFA3; }
+        [dir="rtl"] .toggle-password { right: auto; left: 1rem; }
+        [dir="rtl"] .password-wrapper .signup-input { padding-right: 3rem; padding-left: 3rem; }
+        [dir="rtl"] .input-icon { left: auto; right: 0; padding-left: 0; padding-right: 1rem; }
+
+        /* primary button */
+        .btn-primary {
+            background: #111;
+            color: #fff;
+            font-weight: 700;
+            padding: 0.85rem 1.8rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.02em;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,142,108,0.35);
+            background: #2A2A2A;
+        }
+        .dark .btn-primary {
+            background: #fff;
+            color: #111;
+        }
+        .dark .btn-primary:hover {
+            background: #FFE0D3;
+            color: #111;
+            box-shadow: 0 8px 25px rgba(255,142,108,0.3);
+        }
+
+        /* social */
+        .social-btn {
+            flex: 1;
+            padding: 0.8rem 0.5rem;
+            border-radius: 50px;
+            border: 1.5px solid #E5E5E5;
+            background: white;
+            color: #111;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        .dark .social-btn {
+            background: rgba(30,30,30,0.6);
+            border-color: #3A3A3A;
+            color: #F5F5F5;
+        }
+        .social-btn:hover {
+            background: rgba(255,142,108,0.08);
+            border-color: #FF8E6C;
+            transform: translateY(-2px);
+        }
+        .dark .social-btn:hover {
+            background: rgba(255,142,108,0.12);
+            border-color: #FF8E6C;
+        }
+        .social-btn i { color: #FF8E6C; font-size: 1.1rem; }
+        .dark .social-btn i { color: #FF8E6C; }
+
+        /* logo */
+        .logo-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+        .logo-icon-box {
+            background: #111;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(255,142,108,0.25);
+            border: 1px solid rgba(255,142,108,0.2);
+            flex-shrink: 0;
+        }
+        .logo-icon-box i {
+            color: #FF8E6C;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .logo-wrapper:hover .logo-icon-box i { transform: scale(1.1); }
+        .logo-text-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            font-family: 'Poppins', sans-serif;
+        }
+        .logo-text .drive { color: #111; }
+        .dark .logo-text .drive { color: #fff; }
+        .logo-text .easy { color: #FF8E6C; }
+        .logo-sub {
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #888;
+            font-weight: 600;
+            margin-top: -1px;
+            display: block;
+        }
+        .dark .logo-sub { color: #94A3B8; }
+
+        .welcome-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111;
+            margin-top: 0.5rem;
+            margin-bottom: 0.05rem;
+            text-align: center;
+            line-height: 1.2;
+        }
+        .dark .welcome-title { color: #F5F5F5; }
+        .welcome-subtitle {
+            font-size: 0.85rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 0.3rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .dark .welcome-subtitle { color: #94A3B8; }
+
+        .terms-text {
+            font-size: 0.7rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        .dark .terms-text { color: #94A3B8; }
+        .terms-link {
+            color: #FF8E6C;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .terms-link:hover { text-decoration: underline; color: #F27A58; }
+        .dark .terms-link { color: #FF8E6C; }
+        .dark .terms-link:hover { color: #FFBFA3; }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 0.8rem 0 0.6rem;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #E5E5E5;
+        }
+        .dark .divider::before, .dark .divider::after {
+            border-bottom-color: #3A3A3A;
+        }
+        .divider span {
+            font-size: 0.7rem;
+            padding: 0 0.8rem;
+            color: #666;
+            font-weight: 500;
+        }
+        .dark .divider span { color: #94A3B8; }
+
+        .container-tight {
+            max-width: 480px;
+            width: 100%;
+            padding: 0 1rem;
+        }
+        .hidden { display: none; }
+        .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.6rem; }
+
+        /* RTL */
+        [dir="rtl"] .signup-input { padding: 0.85rem 3rem 0.85rem 1.2rem; }
+        [dir="rtl"] .fa-arrow-right { transform: scaleX(-1); }
+
+        /* responsive */
+        @media (max-width: 430px) {
+            .signup-card { padding: 1.25rem 1.2rem; border-radius: 28px; }
+            .logo-icon-box { width: 40px; height: 40px; }
+            .logo-icon-box i { font-size: 1.2rem; }
+            .logo-text { font-size: 1.25rem; }
+            .welcome-title { font-size: 1.25rem; margin-top: 0.25rem; }
+            .signup-input { padding: 0.6rem 0.8rem 0.6rem 2.4rem; font-size: 0.85rem; }
+            .password-wrapper .signup-input { padding-right: 2.4rem; }
+            .btn-primary { padding: 0.6rem 1rem; font-size: 0.85rem; }
+            .social-btn { padding: 0.5rem 0.3rem; font-size: 0.75rem; }
+            .theme-toggle-wrapper { top: 8px; right: 8px; }
+            .toggle-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+        }
+        @media (max-height: 750px) {
+            .signup-card { padding: 0.8rem 1.2rem; transform: scale(0.95); transform-origin: center; }
+            .logo-center { margin-bottom: 0.2rem; }
+            .logo-icon-box { width: 34px; height: 34px; }
+            .logo-icon-box i { font-size: 1rem; }
+            .logo-text { font-size: 1.1rem; }
+            .welcome-title { font-size: 1.1rem; margin-top: 0.1rem; }
+            .welcome-subtitle { font-size: 0.7rem; }
+            .signup-input { padding: 0.5rem 0.6rem 0.5rem 2rem; font-size: 0.8rem; }
+            .btn-primary { padding: 0.5rem 0.8rem; font-size: 0.8rem; }
+            .social-btn { padding: 0.35rem 0.3rem; font-size: 0.7rem; }
+            .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.4rem; }
+        }
+    </style>
+  <link rel="icon" href="assets/fav.png" type="image/png">
+</head>
+
+<body>
+
+    <!-- ===== THEME TOGGLES ===== -->
+    <div class="theme-toggle-wrapper flex items-center gap-3">
+        <button id="theme-toggle" class="toggle-btn"><i class="fas fa-moon"></i><i class="fas fa-sun hidden"></i></button>
+        <button id="rtl-toggle" class="toggle-btn">⇄</button>
+    </div>
+
+    <!-- ===== SIGNUP CARD ===== -->
+    <div class="container-tight">
+        <div class="signup-card">
+
+            <!-- LOGO -->
+            <div class="logo-center mb-6">
+                <a href="index.html" class="logo-wrapper">
+                    <div class="logo-icon-box">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="logo-text-group">
+                        <span class="logo-text">
+                            <span class="drive">DRIVE</span><span class="easy">EASY</span>
+                        </span>
+                        <span class="logo-sub">Driving School & License</span>
+                    </div>
+                </a>
+                <h1 class="welcome-title">Start Your Journey</h1>
+                <p class="welcome-subtitle">Create your account and hit the road</p>
+            </div>
+
+            <!-- FORM -->
+            <form id="signupForm" class="space-y-3" action="#" method="GET">
+
+                <!-- full name -->
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#FF8E6C] input-icon">
+                        <i class="fas fa-user w-4 text-sm"></i>
+                    </span>
+                    <input type="text" id="fullName" name="name" placeholder="Full name" required
+                        class="signup-input text-sm md:text-sm">
+                </div>
+
+                <!-- email -->
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#FF8E6C] input-icon">
+                        <i class="fas fa-envelope w-4 text-sm"></i>
+                    </span>
+                    <input type="email" id="email" name="email" placeholder="Email address" required
+                        class="signup-input text-sm md:text-sm">
+                </div>
+
+                <!-- password -->
+                <div class="password-wrapper">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#FF8E6C] input-icon">
+                        <i class="fas fa-lock w-4 text-sm"></i>
+                    </span>
+                    <input type="password" id="signup-password" name="password" placeholder="Password" required
+                        class="signup-input text-sm md:text-sm">
+                    <button type="button" class="toggle-password" data-target="signup-password" aria-label="Show password">
+                        <i class="far fa-eye-slash"></i>
+                    </button>
+                </div>
+
+                <!-- confirm password -->
+                <div class="password-wrapper">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#FF8E6C] input-icon">
+                        <i class="fas fa-lock w-4 text-sm"></i>
+                    </span>
+                    <input type="password" id="signup-confirm-password" name="confirm_password" placeholder="Confirm password" required
+                        class="signup-input text-sm md:text-sm">
+                    <button type="button" class="toggle-password" data-target="signup-confirm-password" aria-label="Show password">
+                        <i class="far fa-eye-slash"></i>
+                    </button>
+                </div>
+
+                <!-- terms -->
+                <div class="flex items-start space-x-2 rtl:space-x-reverse mt-1">
+                    <input type="checkbox" id="terms" required
+                        class="mt-0.5 rounded border-gray-300 dark:border-gray-600 text-[#FF8E6C] focus:ring-[#FF8E6C]/30 dark:bg-gray-700">
+                    <label for="terms" class="terms-text">
+                        I agree to the <a href="#" class="terms-link" id="termsLink">Terms of Service</a> and <a href="#" class="terms-link" id="privacyLink">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <!-- submit -->
+                <button type="submit" class="btn-primary mt-2">
+                    Create Account <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                </button>
+            </form>
+
+            <!-- divider -->
+            <div class="divider">
+                <span>or sign up with</span>
+            </div>
+
+            <!-- social -->
+            <div class="flex gap-3">
+                <button class="social-btn group" id="googleSignupBtn">
+                    <i class="fab fa-google"></i> <span>Google</span>
+                </button>
+                <button class="social-btn group" id="appleSignupBtn">
+                    <i class="fab fa-apple"></i> <span>Apple</span>
+                </button>
+            </div>
+
+            <!-- login link -->
+            <div class="mt-4 text-center" dir="ltr">
+                <span class="text-xs text-gray-600 dark:text-gray-400">Already have an account?</span>
+                <a href="login.html" class="text-xs font-semibold text-[#FF8E6C] dark:text-[#FF8E6C] hover:text-[#F27A58] ml-1 rtl:mr-1 hover:underline">
+                    Sign in
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        (function () {
+            // ---------- THEME ----------
+            const themeToggle = document.getElementById('theme-toggle');
+            function setTheme(isDark) {
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+                const icon = themeToggle?.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-sun', 'fa-moon');
+                    icon.classList.add(isDark ? 'fa-moon' : 'fa-sun');
+                }
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            }
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') setTheme(true);
+            else if (savedTheme === 'light') setTheme(false);
+            else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
+            else setTheme(false);
+
+            if (themeToggle) {
+                themeToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setTheme(!document.documentElement.classList.contains('dark'));
+                });
+            }
+
+            // ---------- RTL ----------
+            const rtlBtn = document.getElementById('rtl-toggle');
+            function setRTL(isRTL) {
+                if (isRTL) {
+                    document.documentElement.dir = 'rtl';
+                    document.documentElement.lang = 'ar';
+                    localStorage.setItem('dir', 'rtl');
+                } else {
+                    document.documentElement.dir = 'ltr';
+                    document.documentElement.lang = 'en';
+                    localStorage.setItem('dir', 'ltr');
+                }
+            }
+            const savedDir = localStorage.getItem('dir');
+            savedDir === 'rtl' ? setRTL(true) : setRTL(false);
+            if (rtlBtn) {
+                rtlBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setRTL(document.documentElement.dir !== 'rtl');
+                });
+            }
+
+            // ---------- PASSWORD EYE ----------
+            document.querySelectorAll('.toggle-password').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    const input = document.getElementById(targetId);
+                    if (input) {
+                        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                        input.setAttribute('type', type);
+                        const icon = this.querySelector('i');
+                        if (icon) {
+                            if (type === 'text') {
+                                icon.classList.remove('fa-eye-slash');
+                                icon.classList.add('fa-eye');
+                            } else {
+                                icon.classList.remove('fa-eye');
+                                icon.classList.add('fa-eye-slash');
+                            }
+                        }
+                    }
+                });
+            });
+
+            // ---------- SOCIAL ----------
+            document.getElementById('googleSignupBtn')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('🚗 Google sign-up would be implemented here.\n\nWelcome to DriveEasy!');
+            });
+            document.getElementById('appleSignupBtn')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('🚗 Apple sign-up would be implemented here.\n\nWelcome to DriveEasy!');
+            });
+
+            // ---------- TERMS ----------
+            document.getElementById('termsLink')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('📜 DriveEasy Terms of Service would be displayed here.');
+            });
+            document.getElementById('privacyLink')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('🔒 DriveEasy Privacy Policy would be displayed here.');
+            });
+
+            // ---------- FORM SUBMIT ----------
+            document.getElementById('signupForm')?.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const password = document.getElementById('signup-password')?.value;
+                const confirm = document.getElementById('signup-confirm-password')?.value;
+                const termsCheck = document.getElementById('terms');
+                const fullName = document.getElementById('fullName')?.value;
+                const email = document.getElementById('email')?.value;
+
+                if (!fullName || !email) {
+                    alert('🚗 Please enter your name and email address.');
+                    return;
+                }
+                if (password !== confirm) {
+                    alert('⚠️ Passwords do not match. Please re-enter.');
+                    return;
+                }
+                if (password && password.length < 6) {
+                    alert('🔐 Password must be at least 6 characters.');
+                    return;
+                }
+                if (!termsCheck.checked) {
+                    alert('📜 Please accept the Terms of Service and Privacy Policy.');
+                    return;
+                }
+                // Redirect to login after signup
+                window.location.href = 'login.html';
+            });
+        })();
+    </script>
+</body>
+</html>
